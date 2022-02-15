@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!, except: :index
+  # ユーザー管理機能の時点では不要のためコメントアウト、かつ、この記述は個別のコントローラーへ移動する。
+  # before_action :authenticate_user!, except: :index
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   private

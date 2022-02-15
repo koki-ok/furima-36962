@@ -1,13 +1,16 @@
 class ItemsController < ApplicationController
-  before_action :move_to_index, except: [:index, :show]
+  # ユーザー管理機能の時点では不要なためコメントアウト
+  # before_action :move_to_index, except: [:index, :show]
 
   def index
-    @items = Item.all
+    # ユーザー管理機能の時点では不要なためコメントアウト
+    # @items = Item.all
   end
 
-  private
+  # ユーザー管理機能の時点では不要なためコメントアウト
+  # private
 
-  def move_to_index
-    redirect_to action: :index unless user_signed_in?
-  end
+  # def move_to_index
+    # redirect_to action: :index unless user_signed_in?
+  # end
 end
