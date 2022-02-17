@@ -11,8 +11,11 @@ class ItemsController < ApplicationController
   end
 
   # ユーザー管理機能の時点では不要なためコメントアウト
-  # private
+  private
 
+  def message_params
+    params.require(:item).permit(:image).merge(user_id: current_user.id)
+  end
   # def move_to_index
     # redirect_to action: :index unless user_signed_in?
   # end
