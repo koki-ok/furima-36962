@@ -3,8 +3,11 @@ class ItemsController < ApplicationController
   # before_action :move_to_index, except: [:index, :show]
 
   def index
-    # ユーザー管理機能の時点では不要なためコメントアウト
-    # @items = Item.all
+    @items = Item.all
+  end
+
+  def new
+    @item = Item.new
   end
 
   # ユーザー管理機能の時点では不要なためコメントアウト
