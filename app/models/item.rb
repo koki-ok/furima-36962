@@ -9,4 +9,8 @@ class Item < ApplicationRecord
   belongs_to :user
  # has_one :purchase
   has_one_attached :image
+
+  validates :product_name, :product_description, :price, presence: true
+  validates :category_id, :product_condition_id, :burden_of_shipping_charge_id, :shipping_area_id, :days_to_ship_id, numericality: { other_than: 1 , message: "can't be blank"}
+
 end
