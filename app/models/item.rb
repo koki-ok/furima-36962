@@ -10,7 +10,16 @@ class Item < ApplicationRecord
  # has_one :purchase
   has_one_attached :image
 
-  validates :product_name, :product_description, :price, presence: true
+  validates :product_name,                 presence: true
+  validates :product_description,          presence: true
+  validates :category_id,                  presence: true
+  validates :product_condition_id,         presence: true
+  validates :burden_of_shipping_charge_id, presence: true
+  validates :shipping_area_id,             presence: true
+  validates :days_to_ship_id,              presence: true
   validates :category_id, :product_condition_id, :burden_of_shipping_charge_id, :shipping_area_id, :days_to_ship_id, numericality: { other_than: 1 , message: "can't be blank"}
 
+  with_options presence: true, format: { with: /\A[0-9]+\z/ } do
+    validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }, presence: { message: "can't be blank" }
+  end
 end
