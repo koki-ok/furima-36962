@@ -25,8 +25,13 @@ RSpec.describe PurchaseAddress, type: :model do
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Post code can't be blank")
       end
+      it 'post_codeが正しい形式(3桁ハイフン4桁)でないと保存できないこと' do
+        @purchase_address.post_code = '1234567'
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include('Post code is invalid. Half-width number. Include hyphen(-).')
+      end
       it 'post_codeが正しい形式(3桁ハイフン4桁かつ半角数字)でないと保存できないこと' do
-        @purchase_address.post_code = '123456７'
+        @purchase_address.post_code = '123-456７'
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include('Post code is invalid. Half-width number. Include hyphen(-).')
       end
@@ -50,13 +55,17 @@ RSpec.describe PurchaseAddress, type: :model do
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Telephone number can't be blank")
       end
-      it 'telephone_numberは10桁以上11桁以内の半角数値以外では保存できないこと' do
+      it 'telephone_numberは10桁以上11桁以内の半角数値以外では保存できないこと（9桁以下の場合）' do
         @purchase_address.telephone_number = '090123456'
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include('Telephone number is invalid. 10 to 11 characters. Half-width numbers only.')
+      end
+      it 'telephone_numberは10桁以上11桁以内の半角数値以外では保存できないこと（12桁以上の場合）' do
         @purchase_address.telephone_number = '090123456789'
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include('Telephone number is invalid. 10 to 11 characters. Half-width numbers only.')
+      end
+      it 'telephone_numberは10桁以上11桁以内の半角数値以外では保存できないこと（全角数値の場合）' do
         @purchase_address.telephone_number = '０９０１２３４５６７８'
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include('Telephone number is invalid. 10 to 11 characters. Half-width numbers only.')
@@ -65,6 +74,16 @@ RSpec.describe PurchaseAddress, type: :model do
         @purchase_address.token = nil
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Token can't be blank")
+      end
+      it 'userが紐付いていなければ購入できない' do
+        @purchase_address.user_id = nil
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("User can't be blank")
+      end
+      it 'itemが紐付いていなければ購入できない' do
+        @purchase_address.item_id = nil
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("Item can't be blank")
       end
     end
   end

@@ -1,16 +1,16 @@
 class PurchasesController < ApplicationController
-  before_action :authenticate_user!, expect: :index
-  before_action :sold_out, expect: :index
+  before_action :authenticate_user!
+  before_action :item_find
+  before_action :sold_out
+  
 
   def index
     @purchase_address = PurchaseAddress.new
-    @item = Item.find(params[:item_id])
     redirect_to root_path if current_user == @item.user || @item.purchase.present?
   end
 
   def create
     @purchase_address = PurchaseAddress.new(purchase_params)
-    @item = Item.find(params[:item_id])
     if @purchase_address.valid?
       pay_item
       @purchase_address.save
@@ -22,10 +22,13 @@ class PurchasesController < ApplicationController
 
   private
 
+  def item_find
+    @item = Item.find(params[:item_id])
+  end
+
   def sold_out
     @purchase_address = PurchaseAddress.new
-    @item = Item.find(params[:item_id])
-    redirect_to root_path if @purchase_address.item_id
+    redirect_to root_path if current_user == @item.user || @item.purchase.present?
   end
 
   def purchase_params
