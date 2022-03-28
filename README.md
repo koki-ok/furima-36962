@@ -56,7 +56,7 @@ has_one :address
 | Column           | Type       | Options                        |
 | -----------------| ---------- | ------------------------------ |
 | post_code        | string     | null: false                    |
-| shipping_area    | string     | null: false                    |
+| shipping_area    | integer    | null: false                    |
 | municipalities   | string     | null: false                    |
 | house_number     | string     | null: false                    |
 | building_name    | string     |                                |

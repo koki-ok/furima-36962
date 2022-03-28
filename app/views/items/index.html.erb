@@ -121,16 +121,15 @@
       <% @items.each do |item| %>
       <li class='list'>
        <%= link_to item_path(item) do%>
+
         <div class='item-img-content'>
           <%= image_tag item.image, class: "item-img" if item.image.attached? %>
 
-          <%# 商品購入機能実装後に実装 %>
-          <%# <% if @items.empty? %>
+          <% if item.purchase.present? == true %>
           <div class='sold-out'>
             <span>Sold Out!!</span>
           </div>
-          <%# <% end %>
-          <%# //商品購入機能実装後に実装 %>
+          <% end %>
 
         </div>
         <div class='item-info'>
