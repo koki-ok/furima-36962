@@ -8,7 +8,8 @@ class PurchaseAddress
     validates :shipping_area_id, numericality: { other_than: 1, message: "can't be blank" }
     validates :municipalities
     validates :house_number
-    validates :telephone_number, format: { with: /\A\d{10,11}\z/, message: 'is invalid. 10 to 11 characters. Half-width numbers only.' }
+    validates :telephone_number,
+              format: { with: /\A\d{10,11}\z/, message: 'is invalid. 10 to 11 characters. Half-width numbers only.' }
     validates :user_id
     validates :item_id
     validates :token
