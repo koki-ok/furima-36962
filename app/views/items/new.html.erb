@@ -15,11 +15,11 @@
         <span class="indispensable">必須</span>
       </div>
       <div class="click-upload">
-        <div id="previews"></div>
+      <div id="previews"></div>
         <p>
           クリックしてファイルをアップロード
         </p>
-        <%= f.file_field :image, id:"item-image" %>
+        <%= f.file_field :images, id:"item-images", name: 'item[images][]', data: {index: 0} %>
       </div>
     </div>
  
