@@ -8,9 +8,9 @@ class Item < ApplicationRecord
 
   belongs_to :user
   has_one :purchase
-  has_one_attached :image
+  has_many_attached :images
 
-  validates :image,                        presence: true
+  validates :images,                       presence: true
   validates :product_name,                 presence: true
   validates :product_description,          presence: true
   validates :category_id,                  presence: true
