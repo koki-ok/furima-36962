@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function(){
   // 新規投稿・編集ページのフォームがないならここで終了。「!」は論理否定演算子。
   if (!postForm) return null;
 
+  // 投稿できる枚数の制限を定義
+  const imageLimits = 10;
+
   // プレビュー画像を生成・表示する関数
   const buildPreviewImage = (dataIndex, blob) =>{
     // 画像を表示するためのdiv要素を生成
@@ -22,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function(){
     const deleteButton = document.createElement("div");
     deleteButton.setAttribute("class", "image-delete-button");
     deleteButton.innerText = "削除";
+
+    // 削除ボタンをクリックしたらプレビューとfile_fieldを削除させる
+    deleteButton.addEventListener("click", () => deleteImage(dataIndex));
 
     // 生成したHTMLの要素をブラウザに表示させる
     previewWrapper.appendChild(previewImage);
@@ -56,6 +62,10 @@ document.addEventListener('DOMContentLoaded', function(){
       deletePreviewImage.remove();
       const deleteFileField = document.querySelector(`input[type="file"][data-index="${dataIndex}"]`);
       deleteFileField.remove();
+
+    // 画像の枚数が最大のときに削除ボタンを押した場合、file_fieldを1つ追加する
+    const imageCount = document.querySelectorAll(".preview").length;
+    if (imageCount == imageLimits - 1) buildNewFileField();
     };  
 
   // input要素で値の変化が起きた際に呼び出される関数の中身
@@ -83,7 +93,9 @@ document.addEventListener('DOMContentLoaded', function(){
     };
 
     buildPreviewImage(dataIndex, blob);
-    buildNewFileField();
+    // 画像の枚数制限に引っかからなければ、新しいfile_fieldを追加する
+    const imageCount = document.querySelectorAll(".preview").length;
+    if (imageCount < imageLimits) buildNewFileField();
   };
 
   // input要素を取得
