@@ -11,6 +11,7 @@ class Item < ApplicationRecord
   has_many_attached :images
 
   validates :images,                       presence: true
+  validates :images, length: { minimum: 1, maximum: 10, message: "make one or more and 10 or less" }
   validates :product_name,                 presence: true
   validates :product_description,          presence: true
   validates :category_id,                  presence: true

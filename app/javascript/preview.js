@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const dataIndex = e.target.getAttribute('data-index');
 
     const file = e.target.files[0];
+
     // fileが空 = 何も選択しなかったのでプレビュー等を削除して終了する
     if (!file) {
       deleteImage(dataIndex);
@@ -93,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function(){
     };
 
     buildPreviewImage(dataIndex, blob);
+    
     // 画像の枚数制限に引っかからなければ、新しいfile_fieldを追加する
     const imageCount = document.querySelectorAll(".preview").length;
     if (imageCount < imageLimits) buildNewFileField();
